@@ -5,7 +5,8 @@ import ngaria from 'angular-aria';
 import ngmaterial from 'angular-material';
 //import chartjs from 'chart.js';
 import angularcharts from 'angular-chart.js';
-
+import '../node_modules/angular-material/angular-material.css';
+import '../client/main.css';
 angular.module('socially', [
     angularMeteor,
     nganimate,
@@ -15,6 +16,24 @@ angular.module('socially', [
 //    chartjs
 
 ])
+
+    .config(function ($mdThemingProvider) {
+        $mdThemingProvider
+            .theme('default')
+            .primaryPalette('orange')
+            .accentPalette('deep-orange')
+            .warnPalette('red');
+        /*     .primaryPalette('brown')
+         .accentPalette('green')
+         .warnPalette('red')
+         .backgroundPalette('teal', {
+         'default': '50',
+         'hue-1': '100',
+         'hue-2': '200',
+         'hue-3': '300'
+
+         });*/
+    })
 
     .controller('View1Ctrl', ['$scope', '$interval', function ($scope, $interval) {
         $scope.test1="blablabla";
