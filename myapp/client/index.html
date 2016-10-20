@@ -1,3 +1,36 @@
-<body ng-app="socially">
-<div ng-include src="'client/main.html'"></div>
+<body ng-app="dasProjekt">
+
+<style>[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;}
+</style>
+
+<div layout="column" ng-cloak style="height: 100%"ng-controller="mainController" >
+    <md-toolbar scroll> <!--scroll -->
+        <div class="md-toolbar-tools site-content-toolbar">
+            <!-- fill up the space between left and right area -->
+            <md-button class="md-icon-button" ng-click="toggleLeft()">
+                <i class="material-icons">menu</i>
+                <!--<md-icon class="material-icons">menu</md-icon>-->
+            </md-button>
+            <span flex></span>
+        </div>
+    </md-toolbar>
+    <section layout="row" flex>
+        <md-sidenav scroll class="md-sidenav-left
+        md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-xs')">
+            <md-toolbar class="md-theme-indigo">
+                <h1 class="md-toolbar-tools">Projekt "Industrie 4.0"</h1>
+            </md-toolbar>
+            <md-content layout-padding>
+                <md-button class="toolbareintraege md-accent"  ng-click="toggleLeft()">view1</md-button>
+                <md-button class="toolbareintraege md-accent" ng-click="toggleLeft()">view2</md-button>
+            </md-content>
+        </md-sidenav>
+        <md-content flex layout-padding style="margin-top: 75px">
+            <div ui-view></div>
+
+        </md-content>
+    </section>
+
+</div>
 </body>

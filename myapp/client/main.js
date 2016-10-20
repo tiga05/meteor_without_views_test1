@@ -1,21 +1,41 @@
 import angular from 'angular';
 import angularMeteor from 'angular-meteor';
-import nganimate from 'angular-animate';
-import ngaria from 'angular-aria';
-import ngmaterial from 'angular-material';
+//import ngAnimate from 'angular-animate';
+//import ngAria from 'angular-aria';
+import ngMaterial from 'angular-material';
+import uiRouter from 'angular-ui-router';
 //import chartjs from 'chart.js';
-import angularcharts from 'angular-chart.js';
+//import ngRoute from 'angular-route';
+import angularCharts from 'angular-chart.js';
 import '../node_modules/angular-material/angular-material.css';
 import '../client/main.css';
-angular.module('socially', [
+angular.module('dasProjekt', [
     angularMeteor,
-    nganimate,
-    ngaria,
-    ngmaterial,
-   angularcharts,
+    //ngAnimate,
+    //ngAria,
+    ngMaterial,
+   angularCharts,
+   // ngRoute
+    uiRouter
 //    chartjs
 
 ])
+
+    .config(function($stateProvider, $urlRouterProvider) {
+
+        $urlRouterProvider.otherwise('/home');
+
+        $stateProvider
+
+        // HOME STATES AND NESTED VIEWS ========================================
+            .state('home', {
+                url: '/home',
+                templateUrl: 'test'
+
+            });
+
+    })
+
 
     .config(function ($mdThemingProvider) {
         $mdThemingProvider
@@ -35,101 +55,22 @@ angular.module('socially', [
          });*/
     })
 
-    .controller('View1Ctrl', ['$scope', '$interval', function ($scope, $interval) {
-        $scope.test1="blablabla";
-        $scope.cardRow = [
-            {name: 'Drilling Heat', color: 'white', value: 0},
-            {name: 'Drilling Speed', color: 'white', value: 0},
-            {name: 'Milling Heat', color: 'white', value: 0},
-            {name: 'Milling Speed', color: 'white', value: 0}
-        ];
-        $scope.type = ['bar','line','pie','doughnut','radar'];
-        $scope.chartRow = [
-            {
-                name: 'Chart1',
-                type: 'bar',
-                labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-                series: ['Series A'],
-                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                datasetOverride: [{yAxisID: 'y-axis-1'}],
-                options: {
-                    animation: false,
-                    scales: {
-                        yAxes: [
-                            {
-                                id: 'y-axis-1',
-                                type: 'linear',
-                                display: true,
-                                position: 'left'
+.controller('mainController', function ($scope, $mdSidenav, $log) {
 
-                            }]
-                    }
-                }
-            },
-            {
-                name: 'Chart2',
-                type: 'line',
-                labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-                series: ['Series A'],
-                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                datasetOverride: [{yAxisID: 'y-axis-1'}],
-                options: {
-                    animation: false,
-                    scales: {
-                        yAxes: [
-                            {
-                                id: 'y-axis-1',
-                                type: 'linear',
-                                display: true,
-                                position: 'left'
 
-                            }]
-                    }
-                }
-            }
-            //  {name: 'Chart1',descr:'irgendein Text 3'},
-            //  {name: 'Wert x',descr:'blaaaa'}
-        ];
+    $scope.toggleLeft = buildToggler('left');
 
-        function update() {
-            for (var i = 0; i < $scope.cardRow.length; i++) {
-                $scope.cardRow[i].value = Math.round((Math.random() * 10) * 10);
-                var value = $scope.cardRow[i].value;
-                switch (true) {
-                    case (value > 80):
-                        $scope.cardRow[i].color = 'red';
-                        break;
-                    case (value > 60):
-                        $scope.cardRow[i].color = 'orange';
-                        break;
-                    case (value > 40):
-                        $scope.cardRow[i].color = 'yellow';
-                        break;
-                    default:
-                        $scope.cardRow[i].color = 'green';
-                        break;
-                }
-            }
-            for (var y = 0; y < $scope.chartRow.length; y++) {
-                for (var z = 0; z < $scope.chartRow[y].data.length; z++) {
-                    $scope.chartRow[y].data[z] = $scope.chartRow[y].data[z + 1];
-                }
-                $scope.chartRow[y].data[z - 1] = Math.round((Math.random() * 10) * 10);
-            }
+    function buildToggler(navID) {
+        return function () {
+            $mdSidenav(navID)
+                .toggle()
+                .then(function () {
+                    $log.debug("toggle " + navID + " is done");
+                });
         }
+    }//buildtoggler
 
-        $interval(update, 1000);
-        $scope.onClick = function (points, evt) {
-            console.log(points, evt);
-        };
 
-        //the following is NOT WORKING!
-        /*$scope.colours=[{ // default
-         fillColor: "rgba(224, 108, 112, 1)",
-         strokeColor: "rgba(207,100,103,1)",
-         pointColor: "rgba(220,220,220,1)",
-         pointStrokeColor: "#fff",
-         pointHighlightFill: "#fff",
-         pointHighlightStroke: "rgba(151,187,205,0.8)"
-         }];*/
-    }]);
+    $scope.close = function () {
+        $mdSidenav('left').close();
+    }});
